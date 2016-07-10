@@ -37,6 +37,6 @@ hello world!
 ### Run
 
 ```
-$ digdag r hello_world.dig -p repository_path=/path/to/workspace/digdag-slack_0.1.0
+$ digdag r hello_world.dig -p repository_path=/path/to/workspace/digdag-slack
 ```
 
