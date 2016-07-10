@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+archivesBaseName = 'digdag-slack'
+group = 'jp.techium.blog'
+version = '0.1.0'
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile files('./lib/digdag-plugin-utils-0.8.4-SNAPSHOT.jar')
+    compile files('./lib/digdag-spi-0.8.4-SNAPSHOT.jar')
+    compile files('./lib/digdag-client-0.8.4-SNAPSHOT.jar')
+    compile 'javax.inject:javax.inject:1'
+    compile group: 'com.google.guava', name: 'guava', version: 'r05'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.3.1'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+}
+
+javadoc {
+    options.locale = 'en_US'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
+}
+
+def siteUrl = 'https://github.com/KimuraTakaumi/digdag-slack'
+def gitUrl = 'https://github.com/KimuraTakaumi/digdag-slack.git'
+def issueUrl = 'https://github.com/KimuraTakaumi/digdag-slack/issues'
+
+bintray {
+    user = project.hasProperty('bintray_user') ? bintray_user : ''
+    key = project.hasProperty('bintray_apikey') ? bintray_apikey : ''
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'digdag-slack'
+        licenses = ['Apache-2.0']
+        websiteUrl = siteUrl
+        issueTrackerUrl = issueUrl
+        vcsUrl = gitUrl
+        publicDownloadNumbers = true
+        publications = ['mavenPublication']
+        configurations = ['archives']
+        version {
+            name = project.version
+            released = new Date()
+        }
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
