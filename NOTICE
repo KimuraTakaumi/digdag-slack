@@ -19,6 +19,9 @@ be contained in portions of this software.
 digdag is licensed under Apache License, Version 2.0 by Treasure Data.
 https://github.com/treasure-data/digdag
 
+gson is licensed under Apache License, Version 2.0 by Google.
+https://github.com/google/gson
+
 Hikari CP is licensed under Apache License, Version 2.0 by Brett Wooldridge.
 https://github.com/brettwooldridge/HikariCP
 
