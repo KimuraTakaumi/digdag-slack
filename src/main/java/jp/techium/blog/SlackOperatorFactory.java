@@ -5,7 +5,12 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import io.digdag.client.config.Config;
-import io.digdag.spi.*;
+import io.digdag.spi.Operator;
+import io.digdag.spi.OperatorFactory;
+import io.digdag.spi.TaskExecutionContext;
+import io.digdag.spi.TaskRequest;
+import io.digdag.spi.TaskResult;
+import io.digdag.spi.TemplateEngine;
 import io.digdag.util.BaseOperator;
 
 import java.nio.file.Path;
