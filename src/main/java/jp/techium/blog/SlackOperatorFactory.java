@@ -5,7 +5,12 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import io.digdag.client.config.Config;
-import io.digdag.spi.*;
+import io.digdag.spi.Operator;
+import io.digdag.spi.OperatorFactory;
+import io.digdag.spi.TaskExecutionContext;
+import io.digdag.spi.TaskRequest;
+import io.digdag.spi.TaskResult;
+import io.digdag.spi.TemplateEngine;
 import io.digdag.util.BaseOperator;
 
 import java.nio.file.Path;
@@ -28,7 +33,7 @@ public class SlackOperatorFactory
     }
 
     @Override
-    public Operator newTaskExecutor(Path workspacePath, TaskRequest request)
+    public Operator newOperator(Path workspacePath, TaskRequest request)
     {
         return new ExampleOperator(workspacePath, request);
     }
@@ -42,12 +47,12 @@ public class SlackOperatorFactory
         }
 
         @Override
-        public TaskResult runTask()
+        public TaskResult runTask(TaskExecutionContext ctx)
         {
             Config params = request.getConfig().mergeDefault(
                     request.getConfig().getNestedOrGetEmpty("slack"));
 
-            String message = templateEngine.templateCommand(workspacePath, params, null, UTF_8);
+            String message = workspace.templateCommand(templateEngine, params, null, UTF_8);
             String url = params.get("webhook", String.class);
             String channel = "#" + params.get("channel", String.class);
             String username = params.get("username", String.class);

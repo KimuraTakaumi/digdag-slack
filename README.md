@@ -19,7 +19,7 @@ _export:
     repositories:
       - file://${repository_path}
     dependencies:
-      - jp.techium.blog:digdag-slack:0.1.0
+      - jp.techium.blog:digdag-slack:0.1.1
 
 +step1:
   slack>: message.txt
